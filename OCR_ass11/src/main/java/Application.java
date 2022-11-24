@@ -77,14 +77,14 @@ public class Application {
         //check if manager is up, if not creates a new instance
         System.out.println("app starting manager if not up");
         if(!ec2.checkIfManagerIsUp()){
-            ec2.createManagerInstance("Manager", "ami-0ff8a91507f77f867", n);
+            ec2.createManagerInstance("Manager", "ami-03c2d807fa9f967c6", n);
         }
 
         String name = "app-"+ new Date().getTime();
         MANAGER_TO_APP_QUEUE = MANAGER_TO_APP_QUEUE + name;
         String inputFileBucket = "input-file-bucket-" + name;
         String inputFileKey = "input-file-key-"+ name;
-        System.out.println("app - creating input file bucket manager if not up");
+        System.out.println("app - creating input file bucket manager");
         s3.createBucket(inputFileBucket, Region.US_EAST_1);
 
         uploadFileToS3(inputFileBucket, inputFileKey);
@@ -100,7 +100,7 @@ public class Application {
                 sentMsg = true;
             }catch(QueueDoesNotExistException e){
                 System.out.println("app to manager queue not created yet");
-                sleep(3000);
+                sleep(5000);
             }
         }
 
@@ -186,10 +186,10 @@ public class Application {
         String[] imagesAndText = results.split("\n");
         for(String img: imagesAndText){
             String[] URLAndText = img.split("\t");
-            String imgURL = URLAndText[0];
+            String imgURL = URLAndText[0].substring(4);
             String text = "";
             if(URLAndText.length > 1){
-                text = URLAndText[1];
+                text = URLAndText[1].substring(5);
             }
 
             html += "<p><img src=\""+ imgURL+"\"> \n<br>\n "+ text +"</p>";

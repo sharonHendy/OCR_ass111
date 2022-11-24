@@ -52,15 +52,27 @@ public class EC2 {
     create EC2 instance with a Name tag.
      */
     public String createManagerInstance(String name, String amiId, int n) {
-        String userData = "#!/bin/bash -x\n" +
-                "set -e -x\n" +
-//                "sudo yum update -y\n"  +
-//                "sudo yum install maven -y\n"  +
-//                "sudo yum install java-1.8.0-openjdk -y\n" +
-                "aws s3api get-object --bucket bucket-programs --key manager.zip /tmp/manager.zip\n" +
-                "unzip -P yairpass /tmp/manager.zip\n"  +
-                "cd /tmp/\n"+
-                "java -jar manager.jar "+ n + "\n";
+//        String userData = "#!/bin/bash -x\n" +
+////                "set -e -x\n" +//todo it terminates the session
+////                "sudo add-apt-repository ppa:webupd8team/java -y\n"+ //todo
+//                "sudo apt-get update -y\n" +
+//                "sudo apt-get install openjdk-8-jdk\n"+//todo
+//                "echo hello\n"  +
+//                //"sudo yum install maven -y\n"  +
+//                "java -version\n";
+////                "sudo apt install java-1.8.0-openjdk -y\n";//todo !!!
+////                "aws s3api get-object --bucket bucket-programs --key manager.zip /tmp/manager.zip\n"+
+////                "unzip -P yairpass /tmp/manager.zip\n"  +
+////                "cd /tmp/\n"+
+////                "java -jar manager.jar "+ n + "\n";
+
+        String userData = "#!/bin/bash -x\n"+ "sudo yum check-update -y\n"+
+                "aws s3api get-object --bucket bucket-programs --key manager.zip /tmp/manager.zip\n"+
+                "cd /tmp\n"+
+                "unzip -P yairpass manager.zip\n"+
+                "java -jar manager.jar "+n+"\n";
+
+
         RunInstancesRequest runRequest = RunInstancesRequest.builder()
                 .instanceType(InstanceType.T2_MICRO)
                 .imageId(amiId)

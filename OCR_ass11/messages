@@ -29,3 +29,7 @@ worker-<numOfWorkers>
 finish message format:
 app:<appName>\n
 finished
+
+result in s3:
+url:<imgurl>\t
+text:<text>
