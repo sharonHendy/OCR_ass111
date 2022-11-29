@@ -1,11 +1,5 @@
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/Manager.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/AppsQueueListener.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/MainManager.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/Application.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/WorkersQueueListener.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/Sqs.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/Main.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/TasksDistributer.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/S3.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/Worker.java
-/home/sharon/IdeaProjects/OCR_ass11/src/main/java/EC2.java
+C:\Users\sharo\IdeaProjects\OCR_ass111\OCR_ass11\src\main\java\EC2.java
+C:\Users\sharo\IdeaProjects\OCR_ass111\OCR_ass11\src\main\java\Sqs.java
+C:\Users\sharo\IdeaProjects\OCR_ass111\OCR_ass11\src\main\java\Application.java
+C:\Users\sharo\IdeaProjects\OCR_ass111\OCR_ass11\src\main\java\Main.java
+C:\Users\sharo\IdeaProjects\OCR_ass111\OCR_ass11\src\main\java\S3.java

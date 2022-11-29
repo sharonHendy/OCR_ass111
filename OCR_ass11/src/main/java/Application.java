@@ -187,12 +187,16 @@ public class Application {
         for(String img: imagesAndText){
             String[] URLAndText = img.split("\t");
             String imgURL = URLAndText[0].substring(4);
-            String text = "";
-            if(URLAndText.length > 1){
-                text = URLAndText[1].substring(5);
+
+            if(URLAndText.length > 1 && URLAndText[1].startsWith("text")){
+                String text = URLAndText[1].substring(5);
+                html += "<p><img src=\""+ imgURL+"\"> \n<br>\n "+ text +"</p>";
+            }else{
+                String err = URLAndText[1].substring(6);
+                html += "<p>\""+ imgURL+"\"\n<br>\n"+ err +"</p>";
             }
 
-            html += "<p><img src=\""+ imgURL+"\"> \n<br>\n "+ text +"</p>";
+
         }
 
         try{
