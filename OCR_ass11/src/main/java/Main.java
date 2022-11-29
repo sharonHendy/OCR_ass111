@@ -2,10 +2,10 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         boolean terminate = false;
-        if(args.length == 5){
+        if(args.length == 4){
             terminate = true;
         }
-       Application app = new Application(args[1], args[2], Integer.parseInt(args[3]), terminate);
+       Application app = new Application(args[0], args[1], Integer.parseInt(args[2]), terminate);
        app.start();
     }
 }

@@ -28,7 +28,7 @@ public String getAllObjectsInBucket(String bucket) {
     ListObjectsRequest lstReq = ListObjectsRequest.builder().bucket(bucket).build();
     ListObjectsResponse res = s3.listObjects(lstReq);
     for (S3Object o : res.contents()) {
-        results += o.key() + "\t" + getObject(bucket, o.key()) + "\n";
+        results += getObject(bucket, o.key()) + "\n";
     }
     return results;
 }
@@ -68,8 +68,14 @@ public String getAllObjectsInBucket(String bucket) {
                 .bucket(bucketName)
                 .build();
 
-        ResponseBytes<GetObjectResponse> objectBytes = s3.getObjectAsBytes(objectRequest);
-        byte[] data = objectBytes.asByteArray();
+        byte[] data= {};
+        try{
+            ResponseBytes<GetObjectResponse> objectBytes = s3.getObjectAsBytes(objectRequest);
+            data = objectBytes.asByteArray();
+        }catch(NoSuchKeyException e){
+            System.out.println("app- tried to get key wich doesn't exist: key:" + key + "bucket:" + bucketName);
+        }
+
 
         return new String(data, StandardCharsets.UTF_8);
     }
