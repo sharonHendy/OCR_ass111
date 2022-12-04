@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -22,7 +23,11 @@ public class S3 {
         s3 = s3Client;
     }
 
-//
+    public void uploadFileToS3(String bucketName, String key, File inputFile){
+        PutObjectRequest req = PutObjectRequest.builder().bucket(bucketName).key(key).build();
+        s3.putObject(req, RequestBody.fromFile(inputFile));
+    }
+
 public String getAllObjectsInBucket(String bucket) {
     String results = "";
     ListObjectsRequest lstReq = ListObjectsRequest.builder().bucket(bucket).build();
@@ -33,34 +38,6 @@ public String getAllObjectsInBucket(String bucket) {
     return results;
 }
 
-    public void uploadStrToS3(String bucketName, String key, ByteBuffer str){
-        PutObjectRequest req = PutObjectRequest.builder().bucket(bucketName).key(key).build();
-        s3.putObject(req, RequestBody.fromByteBuffer(str));
-    }
-
-    public void deleteObjectsInBucket (String bucket) {
-
-        try {
-            // To delete a bucket, all the objects in the bucket must be deleted first.
-            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
-                    .bucket(bucket)
-                    .build();
-            ListObjectsV2Response listObjectsV2Response;
-
-            do {
-                listObjectsV2Response = s3.listObjectsV2(listObjectsV2Request);
-                for (S3Object s3Object : listObjectsV2Response.contents()) {
-                    DeleteObjectRequest request = DeleteObjectRequest.builder()
-                            .bucket(bucket)
-                            .key(s3Object.key())
-                            .build();
-                    s3.deleteObject(request);
-                }
-            } while (listObjectsV2Response.isTruncated());
-        }
-        catch(Exception e){}
-
-    }
     public String getObject(String bucketName, String key){
         GetObjectRequest objectRequest = GetObjectRequest
                 .builder()
@@ -73,7 +50,7 @@ public String getAllObjectsInBucket(String bucket) {
             ResponseBytes<GetObjectResponse> objectBytes = s3.getObjectAsBytes(objectRequest);
             data = objectBytes.asByteArray();
         }catch(NoSuchKeyException e){
-            System.out.println("app- tried to get key wich doesn't exist: key:" + key + "bucket:" + bucketName);
+            System.out.println("app- tried to get key which doesn't exist: key:" + key + "bucket:" + bucketName);
         }
 
 
@@ -89,15 +66,6 @@ public String getAllObjectsInBucket(String bucket) {
 //                                .locationConstraint(region.id())
                                 .build())
                 .build());
-
-        System.out.println(bucket);
-
-
-    }
-
-    public void deleteBucket(String bucket) {
-        DeleteBucketRequest deleteBucketRequest = DeleteBucketRequest.builder().bucket(bucket).build();
-        s3.deleteBucket(deleteBucketRequest);
     }
 
     /**

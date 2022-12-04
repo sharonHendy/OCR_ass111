@@ -19,16 +19,6 @@ import static java.lang.Thread.sleep;
 
 public class Application {
 
-    //check if manager is up - if not create one.
-    //upload input file to S3
-    //create SQS queue- communication with manager
-    //send message to the manager to start
-    // sends n to the manager
-    //wait for response message from manager
-    //take results file from S3
-    //create HTML file
-    //sends termination request
-
     String APP_TO_MANAGER_QUEUE = "app-to-manager-queue";
     String MANAGER_TO_APP_QUEUE = "manager-to-app-queue-";
     File inputFile;
@@ -53,8 +43,8 @@ public class Application {
         this.terminate = terminate;
     }
 
-    /*
-    starts the application. returns a result HTML file.
+    /**
+    starts the application.
      */
     public void start() throws InterruptedException {
         //initializes clients
@@ -87,7 +77,7 @@ public class Application {
         System.out.println("app - creating input file bucket manager");
         s3.createBucket(inputFileBucket, Region.US_EAST_1);
 
-        uploadFileToS3(inputFileBucket, inputFileKey);
+        s3.uploadFileToS3(inputFileBucket, inputFileKey, inputFile);
 
 
         boolean sentMsg = false;
@@ -173,10 +163,7 @@ public class Application {
 //        }
 //    }
 
-    public void uploadFileToS3(String bucketName, String key){
-        PutObjectRequest req = PutObjectRequest.builder().bucket(bucketName).key(key).build();
-        s3Client.putObject(req, RequestBody.fromFile(inputFile));
-    }
+
     /*
      * create HTML file from results.
      */

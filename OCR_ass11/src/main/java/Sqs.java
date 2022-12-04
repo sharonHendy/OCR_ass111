@@ -31,7 +31,7 @@ public class Sqs {
         }
     }
 
-    /*
+    /**
     send a message to the queue.
      */
     public void sendMessageToQueue(String queueName, String message){
@@ -48,7 +48,7 @@ public class Sqs {
         sqs.sendMessage(send_msg_request);
     }
 
-    /*
+    /**
     receive messages from the queue.
      */
     public List<Message> receiveMessageFromQueue(String queueName){
@@ -64,6 +64,9 @@ public class Sqs {
         return messages;
     }
 
+    /**
+     * receive one message from the queue
+     */
     public List<Message> receiveOneMessageFromQueue(String queueName){
         GetQueueUrlRequest getQueueRequest = GetQueueUrlRequest.builder()
                 .queueName(queueName)
@@ -79,6 +82,9 @@ public class Sqs {
         return messages;
     }
 
+    /**
+     * delete a message from the given queue.
+     */
     public void deleteMessageFromQueue(String queueName, Message msg){
         try{
             GetQueueUrlRequest getQueueRequest = GetQueueUrlRequest.builder()
